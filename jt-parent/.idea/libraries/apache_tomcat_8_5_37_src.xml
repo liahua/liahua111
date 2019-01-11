@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="apache-tomcat-8.5.37-src">
+    <CLASSES>
+      <root url="jar://D:/apache-tomcat-8.5.37-src.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://D:/apache-tomcat-8.5.37-src.zip!/apache-tomcat-8.5.37-src/java" />
+      <root url="jar://D:/apache-tomcat-8.5.37-src.zip!/apache-tomcat-8.5.37-src/modules/jdbc-pool/src/main/java" />
+      <root url="jar://D:/apache-tomcat-8.5.37-src.zip!/apache-tomcat-8.5.37-src/modules/jdbc-pool/src/test/java" />
+      <root url="jar://D:/apache-tomcat-8.5.37-src.zip!/apache-tomcat-8.5.37-src/test" />
+      <root url="jar://D:/apache-tomcat-8.5.37-src.zip!/apache-tomcat-8.5.37-src/webapps/docs/appdev/sample/src" />
+      <root url="jar://D:/apache-tomcat-8.5.37-src.zip!/apache-tomcat-8.5.37-src/webapps/examples/WEB-INF/classes" />
+      <root url="jar://D:/apache-tomcat-8.5.37-src.zip!/apache-tomcat-8.5.37-src/webapps/examples/WEB-INF/jsp/applet" />
+      <root url="jar://D:/apache-tomcat-8.5.37-src.zip!/apache-tomcat-8.5.37-src/webapps/examples/jsp/plugin/applet" />
+    </SOURCES>
+  </library>
+</component>

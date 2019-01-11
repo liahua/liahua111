@@ -1,0 +1,72 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+    <!--引入外部prop文件-->
+    <context:property-placeholder location="classpath:/properties/*.properties"></context:property-placeholder>
+    <!--配置数据源-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <!--配置AOP-->
+    <aop:config>
+        <aop:pointcut id="pointCut" expression="execution(* com.jt.idea.manage.service..*.*(..))"/>
+        <aop:advisor advice-ref="transactionInterceptor" pointcut-ref="pointCut"/>
+        <aop:aspect id="findItem" ref="redisAop">
+            <aop:pointcut id="findItemAll"
+                          expression="execution(* com.jt.idea.manage.controller.TbItemCatController.findItemAll(..))"></aop:pointcut>
+            <aop:around method="findItemAllFromCache" pointcut-ref="findItemAll"></aop:around>
+        </aop:aspect>
+    </aop:config>
+
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+    </bean>
+    <!-- 配置切面Bean -->
+    <bean id="redisAop" class="com.jt.idea.manage.aop.RedisAop"/>
+
+
+    <!--配置事务-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--配置事务通知-->
+    <tx:advice id="transactionInterceptor" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--配置mybatis-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:/mybatis/mappers/*.xml</value>
+            </list>
+        </property>
+        <property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"/>
+
+    </bean>
+    <!--接口扫描-->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.jt.idea.manage.mapper"/>
+    </bean>
+
+
+</beans>

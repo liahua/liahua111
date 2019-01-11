@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jt.idea.manage.mapper.IndexBookMapper" >
+  <resultMap id="BaseResultMap" type="com.jt.idea.common.po.IndexBook" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="INTEGER" />
+    <result column="book_img" property="bookImg" jdbcType="VARCHAR" />
+    <result column="direction" property="direction" jdbcType="VARCHAR" />
+    <result column="teacher" property="teacher" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="student_num" property="studentNum" jdbcType="INTEGER" />
+    <result column="rate" property="rate" jdbcType="INTEGER" />
+    <result column="knowledge_point_num" property="knowledgePointNum" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, level, time, book_img, direction, teacher, price, student_num, rate, knowledge_point_num, 
+    status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jt.idea.common.po.IndexBookExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from index_book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from index_book
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from index_book
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jt.idea.common.po.IndexBookExample" >
+    delete from index_book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jt.idea.common.po.IndexBook" >
+    insert into index_book (id, name, level, 
+      time, book_img, direction, 
+      teacher, price, student_num, 
+      rate, knowledge_point_num, status
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, 
+      #{time,jdbcType=INTEGER}, #{bookImg,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, 
+      #{teacher,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{studentNum,jdbcType=INTEGER}, 
+      #{rate,jdbcType=INTEGER}, #{knowledgePointNum,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jt.idea.common.po.IndexBook" >
+    insert into index_book
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="bookImg != null" >
+        book_img,
+      </if>
+      <if test="direction != null" >
+        direction,
+      </if>
+      <if test="teacher != null" >
+        teacher,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="studentNum != null" >
+        student_num,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="knowledgePointNum != null" >
+        knowledge_point_num,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=INTEGER},
+      </if>
+      <if test="bookImg != null" >
+        #{bookImg,jdbcType=VARCHAR},
+      </if>
+      <if test="direction != null" >
+        #{direction,jdbcType=VARCHAR},
+      </if>
+      <if test="teacher != null" >
+        #{teacher,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="studentNum != null" >
+        #{studentNum,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgePointNum != null" >
+        #{knowledgePointNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jt.idea.common.po.IndexBookExample" resultType="java.lang.Integer" >
+    select count(*) from index_book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update index_book
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookImg != null" >
+        book_img = #{record.bookImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.direction != null" >
+        direction = #{record.direction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacher != null" >
+        teacher = #{record.teacher,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentNum != null" >
+        student_num = #{record.studentNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.rate != null" >
+        rate = #{record.rate,jdbcType=INTEGER},
+      </if>
+      <if test="record.knowledgePointNum != null" >
+        knowledge_point_num = #{record.knowledgePointNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update index_book
+    set id = #{record.id,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=INTEGER},
+      book_img = #{record.bookImg,jdbcType=VARCHAR},
+      direction = #{record.direction,jdbcType=VARCHAR},
+      teacher = #{record.teacher,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=INTEGER},
+      student_num = #{record.studentNum,jdbcType=INTEGER},
+      rate = #{record.rate,jdbcType=INTEGER},
+      knowledge_point_num = #{record.knowledgePointNum,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jt.idea.common.po.IndexBook" >
+    update index_book
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=INTEGER},
+      </if>
+      <if test="bookImg != null" >
+        book_img = #{bookImg,jdbcType=VARCHAR},
+      </if>
+      <if test="direction != null" >
+        direction = #{direction,jdbcType=VARCHAR},
+      </if>
+      <if test="teacher != null" >
+        teacher = #{teacher,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="studentNum != null" >
+        student_num = #{studentNum,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null" >
+        rate = #{rate,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgePointNum != null" >
+        knowledge_point_num = #{knowledgePointNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jt.idea.common.po.IndexBook" >
+    update index_book
+    set name = #{name,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      time = #{time,jdbcType=INTEGER},
+      book_img = #{bookImg,jdbcType=VARCHAR},
+      direction = #{direction,jdbcType=VARCHAR},
+      teacher = #{teacher,jdbcType=VARCHAR},
+      price = #{price,jdbcType=INTEGER},
+      student_num = #{studentNum,jdbcType=INTEGER},
+      rate = #{rate,jdbcType=INTEGER},
+      knowledge_point_num = #{knowledgePointNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
