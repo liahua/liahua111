@@ -1,7 +1,9 @@
 package com.jt.idea.common.po;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TbItem extends BasePojo{
     private Long id;
 
@@ -21,6 +23,9 @@ public class TbItem extends BasePojo{
 
     private Byte status;
 
+    public String[] getImages(){
+        return image.split(",");
+    }
 
 
     public Long getId() {

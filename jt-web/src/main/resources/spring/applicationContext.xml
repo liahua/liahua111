@@ -10,9 +10,9 @@
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-   <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:annotation-driven></mvc:annotation-driven>
 
-    <context:component-scan base-package="com.jt.idea" ></context:component-scan>
+    <context:component-scan base-package="com.jt.idea"></context:component-scan>
 
     <!--<context:property-placeholder location="classpath:properties/*.properties" ></context:property-placeholder>-->
 
@@ -21,6 +21,28 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     <mvc:default-servlet-handler></mvc:default-servlet-handler>
+    <context:property-placeholder location="classpath:properties/*.properties"></context:property-placeholder>
+    <bean id="requestConfigBuilder" class="org.apache.http.client.config.RequestConfig.Builder">
+        <property name="connectionRequestTimeout" value="${http.request.connectionRequestTimeout}"/>
+        <property name="connectTimeout" value="${http.request.connectTimeout}"/>
+        <property name="socketTimeout" value="${http.request.socketTimeout}"/>
+        <property name="staleConnectionCheckEnabled" value="${http.request.staleConnectionCheckEnabled}"/>
+    </bean>
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+
+
+    <bean id="requestConfig" factory-bean="requestConfigBuilder" factory-method="build"/>
+
+    <bean id="poolingHttpClientConnectionManager" class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager">
+        <property name="maxTotal" value="${http.pool.maxTotal}"/>
+        <property name="defaultMaxPerRoute" value="${http.pool.defaultMaxPerRoute}"/>
+    </bean>
+
+    <bean id="httpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder" factory-method="create">
+        <property name="connectionManager" ref="poolingHttpClientConnectionManager"/>
+    </bean>
+
+    <bean id="httpClient" factory-bean="httpClientBuilder" factory-method="build"/>
 
 
 </beans>

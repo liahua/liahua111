@@ -21,4 +21,6 @@ public interface TbItemService {
     TbItemDesc queryDesc(Long id);
 
     void reshelfItem(Long[] ids);
+
+    TbItem findItemById(Long itemId);
 }

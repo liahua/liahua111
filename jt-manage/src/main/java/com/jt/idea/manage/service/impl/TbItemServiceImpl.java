@@ -104,6 +104,11 @@ public class TbItemServiceImpl implements TbItemService {
         changeStatus((byte) 1, ids);
     }
 
+    @Override
+    public TbItem findItemById(Long itemId) {
+        return tbItemMapper.selectByPrimaryKey(itemId);
+    }
+
     public void changeStatus(byte status,Long[] ids){
         TbItemExample tbItemExample = new TbItemExample();
         tbItemExample.or().andIdIn(Arrays.asList(ids));
