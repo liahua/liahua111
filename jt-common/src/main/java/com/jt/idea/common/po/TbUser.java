@@ -2,7 +2,7 @@ package com.jt.idea.common.po;
 
 import java.util.Date;
 
-public class TbUser {
+public class TbUser  {
     private Long id;
 
     private String username;

@@ -2,7 +2,7 @@ package com.jt.idea.web.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jt.idea.common.po.TbItem;
-import com.jt.idea.web.service.HttpClientService;
+import com.jt.idea.common.service.HttpClientService;
 import com.jt.idea.web.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,5 +1,7 @@
 package com.jt.jtsso.service;
 
+import com.jt.jtsso.po.TbUser;
+
 public interface TbUserService {
     /**
      * 返回结果为true代表数据库中已有该数据
@@ -11,4 +13,14 @@ public interface TbUserService {
      * @return
      */
     boolean findCheckUser(String param, Integer type);
+
+    /**
+     * 无法保证数据一致性
+     *
+     * @param tbUser
+     */
+    void saveUser(TbUser tbUser);
+
+
+    String findUserByUP(TbUser tbUser);
 }
