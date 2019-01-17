@@ -92,4 +92,19 @@ public class TbCart {
     public void setUpdated(Date updated) {
         this.updated = updated;
     }
+
+    @Override
+    public String toString() {
+        return "TbCart{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", itemId=" + itemId +
+                ", itemTitle='" + itemTitle + '\'' +
+                ", itemImage='" + itemImage + '\'' +
+                ", itemPrice=" + itemPrice +
+                ", num=" + num +
+                ", created=" + created +
+                ", updated=" + updated +
+                '}';
+    }
 }

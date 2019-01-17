@@ -30,6 +30,7 @@ public class RedisAop {
 
         Object[] args = jp.getArgs();
         String parentId = args[0] + "";
+        System.out.println("parentId"+parentId);
 
         String easyUITreeList = jedisCluster.get(parentId);
         if (StringUtils.isEmpty(easyUITreeList)) {
