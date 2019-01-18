@@ -1,11 +1,17 @@
 package com.jt.idea.web.controller;
 
 import com.jt.idea.common.po.TbCart;
+import com.jt.idea.common.vo.SysResult;
 import com.jt.idea.web.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.io.CharArrayReader;
+import java.util.List;
 
 @Controller
 @RequestMapping("/cart")
@@ -13,7 +19,10 @@ public class CartController {
     @Autowired
     private CartService cartService;
     @RequestMapping("/show")
-    public String show() {
+    public String findCartListById(Model model) {
+        Long userId=7L;
+        List<TbCart> cartList=cartService.findCartListById(userId);
+        model.addAttribute("cartList", cartList);
         return "cart";
     }
 
@@ -25,19 +34,46 @@ public class CartController {
      *
      *
      *
-     * @param itemId
+     *
      * @param tbCart
      * @return
      */
     @RequestMapping("/add/{itemId}")
-    public String add(@PathVariable Long itemId, TbCart tbCart) {
+    public String saveCart(TbCart tbCart) {
         try {
-            cartService.addItem(tbCart);
+            Long userId=7L;
+            tbCart.setUserId(userId);
+            cartService.saveCart(tbCart);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("tbCart"+tbCart);
-        System.out.println("itemId"+itemId);
-       return "redirect:/items/"+itemId+".html";
+       return "redirect:/cart/show.html";
     }
+
+    @RequestMapping("/delete/{itemId}")
+    public String deleteCart(@PathVariable Long itemId, TbCart tbCart) {
+        try {
+            Long userId=7L;
+            tbCart.setUserId(userId);
+            cartService.deleteCart(tbCart);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/cart/show.html";
+    }
+
+    @RequestMapping("/update/num/{itemId}/{num}")
+    @ResponseBody
+    public SysResult updateCartNum(@PathVariable Long itemId, TbCart tbCart) {
+        try {
+            Long userId=7L;
+            tbCart.setUserId(userId);
+            cartService.updateCartNum(tbCart);
+            SysResult.oK();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return SysResult.build(201, "商品数量修改失败");
+    }
+
 }

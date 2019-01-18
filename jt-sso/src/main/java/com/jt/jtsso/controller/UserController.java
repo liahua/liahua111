@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/user")
 public class UserController {
 
+
     @Autowired
     private TbUserService tbUserService;
     @Autowired
@@ -33,7 +34,7 @@ public class UserController {
         return new JSONPObject(callback, SysResult.oK(flag));
     }
 
-    @RequestMapping(value = "/register")
+    @RequestMapping("/register")
     public SysResult register(@RequestBody TbUser tbUser) {
         try {
             tbUserService.saveUser(tbUser);
